@@ -31,6 +31,8 @@ const initMap = (
             pixelRatio: pixelRatio
         });
 
+    const behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+
     const ui = H.ui.UI.createDefault(map, defaultLayers, 'ru-RU');
 
     const mapSettings = ui.getControl('mapsettings');
