@@ -26,6 +26,11 @@
 
 <script type="text/javascript">
     initMap('map');
+
+    initMapListener([
+        event => console.info(event),
+        event => addPlaceToMap(`<div style="width: 20px; height: 20px; background: red;"></div>`, event, 0, 20)
+    ]);
 </script>
 </body>
 </html>

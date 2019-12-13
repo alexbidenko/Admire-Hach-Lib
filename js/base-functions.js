@@ -7,6 +7,10 @@ const platform = new H.service.Platform({
     useHTTPS: true
 });
 
+const mapGroups = [
+    new H.map.Group()
+] ;
+
 const initMap = (
     blockId,
     defaultLatitude = 44.73,
@@ -42,5 +46,29 @@ const initMap = (
 
     window.addEventListener('resize', () => {
         map.getViewPort().resize()
-    })
+    });
+    
+    mapGroups.forEach(group => {
+        window.map.addObject(group);
+    });
+};
+
+const initMapListener = (eventListeners) => {
+    window.map.addEventListener('tap', function (event) {
+        const coords = window.map.screenToGeo(event.currentPointer.viewportX,
+            event.currentPointer.viewportY);
+        eventListeners.forEach(fun => {
+            fun(coords);
+        });
+    });
+};
+
+const addPlaceToMap = (html, coords, minZoom = 0, maxZoom = 0) => {
+    const icon = new H.map.DomIcon(html);
+
+    const marker = new H.map.DomMarker(coords, {icon: icon,
+        min: minZoom,
+        max: maxZoom
+    });
+    mapGroups[0].addObject(marker);
 };
